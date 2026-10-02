@@ -1,0 +1,12 @@
+# Which Open-Meteo variables we request. Adding a variable here makes it
+# usable in SOP conditions (daily ones as daily_<name>) with no Python change.
+current: [temperature_2m, apparent_temperature, relative_humidity_2m, precipitation,
+          weather_code, pressure_msl, wind_speed_10m, wind_gusts_10m, uv_index]
+hourly:  [temperature_2m, apparent_temperature, relative_humidity_2m, precipitation_probability,
+          precipitation, weather_code, pressure_msl, wind_speed_10m, wind_gusts_10m, uv_index]
+daily:   [precipitation_sum, precipitation_probability_max, wind_gusts_10m_max,
+          uv_index_max, temperature_2m_max]
+forecast_days: 3
+# always shown to the user (plus any field a matched SOP references)
+display: [temperature_2m, apparent_temperature, wind_speed_10m, wind_gusts_10m,
+          precipitation, precipitation_probability]

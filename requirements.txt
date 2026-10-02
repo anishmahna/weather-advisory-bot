@@ -1,0 +1,12 @@
+langgraph
+langchain-core
+langchain-anthropic
+langchain-openai
+fastapi
+uvicorn
+pydantic>=2
+pyyaml
+requests
+python-dotenv
+streamlit
+pytest

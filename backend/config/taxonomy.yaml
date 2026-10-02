@@ -1,0 +1,20 @@
+# Closed vocabulary the intake LLM must map the user's words onto.
+# SOPs reference these tags/groups, so paraphrases ("pedal to the office") hit
+# the same rule as "cycle to work" without any keyword matching.
+activities:
+  cycling:        {groups: [exercise, two_wheeled], description: "riding a bicycle, for exercise or commuting"}
+  running:        {groups: [exercise], description: "running or jogging"}
+  walking:        {groups: [exercise], description: "walking or a stroll for exercise"}
+  hiking:         {groups: [exercise], description: "hiking, trekking, trail walks"}
+  outdoor_sports: {groups: [exercise], description: "cricket, football, outdoor gym, etc."}
+  driving:        {groups: [travel], description: "travelling by car or taxi"}
+  two_wheeler:    {groups: [travel, two_wheeled], description: "motorbike, scooter, moped"}
+  other_travel:   {groups: [travel], description: "any other trip: bus, train commute, road trip"}
+  picnic:         {groups: [leisure], description: "picnic, barbecue, outdoor meal"}
+  park_visit:     {groups: [leisure], description: "going to a park, playground, garden"}
+  outdoor_event:  {groups: [leisure], description: "outdoor party, wedding, match, gathering"}
+  pet_walk:       {groups: [leisure], description: "walking a dog or other pet"}
+  other:          {groups: [], description: "an outdoor activity not in this list"}
+audiences: [general, child, elderly, pet]
+time_windows: [now, today, morning, afternoon, evening, tonight, tomorrow]
+representative_hours: {morning: 8, afternoon: 15, evening: 18, tonight: 21, tomorrow: 12}

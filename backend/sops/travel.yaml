@@ -1,0 +1,32 @@
+- id: SOP-TR-01
+  category: travel
+  severity: moderate
+  title: Likely rain on a trip
+  applies_to: {activity_groups: [travel]}
+  conditions: {field: precipitation_probability, op: gte, value: 70}
+  advice: >
+    Warn of possible delays and recommend checking for alerts before departure.
+  cite_as: "SOP-TR-01 - High rain probability, travel"
+
+- id: SOP-TR-02
+  category: travel
+  severity: high
+  title: Heavy rain right now on the road
+  applies_to: {activity_groups: [travel]}
+  conditions: {field: precipitation, op: gte, value: 7.6}   # mm in the hour = IMD "heavy" rate
+  advice: >
+    Heavy rain reduces visibility and increases stopping distance. Advise
+    postponing non-essential travel; if travel is unavoidable, reduce speed,
+    allow extra time, and avoid flooded roads.
+  cite_as: "SOP-TR-02 - Heavy rainfall rate, travel"
+
+- id: SOP-TR-03
+  category: travel
+  severity: info
+  fallback: true
+  title: Travel - no threshold exceeded
+  applies_to: {activity_groups: [travel]}
+  advice: >
+    None of the written travel thresholds are exceeded for the reported time.
+    Say so plainly and report the figures; do not promise a trouble-free trip.
+  cite_as: "SOP-TR-03 - Travel baseline (no threshold exceeded)"

@@ -1,0 +1,31 @@
+- id: SOP-VG-01
+  category: vulnerable_groups
+  severity: moderate
+  title: Children and strong UV
+  applies_to: {audiences: [child]}
+  conditions: {field: uv_index, op: gte, value: 6}
+  advice: >
+    Keep children in shade where possible, use sunscreen, hats and sunglasses,
+    and limit time outside around midday.
+  cite_as: "SOP-VG-01 - Children, high UV"
+
+- id: SOP-VG-02
+  category: vulnerable_groups
+  severity: high
+  title: Elderly people in heat
+  applies_to: {audiences: [elderly]}
+  conditions: {field: apparent_temperature, op: gte, value: 35}
+  advice: >
+    Advise elderly people to avoid prolonged time outdoors in this heat, stay
+    hydrated, and go out only in the cooler hours of the day.
+  cite_as: "SOP-VG-02 - Elderly, heat"
+
+- id: SOP-VG-03
+  category: vulnerable_groups
+  severity: moderate
+  title: Pets in warm weather
+  applies_to: {audiences: [pet]}
+  conditions: {field: apparent_temperature, op: gte, value: 30}
+  advice: >
+    Walk pets in the cooler hours, avoid hot pavement, and bring water.
+  cite_as: "SOP-VG-03 - Pets, warm weather"

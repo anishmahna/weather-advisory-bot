@@ -1,0 +1,20 @@
+# Fuzzy SOP: there is no numeric trigger. Intent-prefilter is deterministic
+# (applies_to); the soft criterion is judged by the LLM yes/no, and any id it
+# returns is validated against the loaded set. The advice is a qualitative rubric.
+- id: SOP-FZ-01
+  category: leisure
+  severity: info
+  title: General pleasantness of a leisure outing
+  applies_to: {activities: [picnic, park_visit, outdoor_event]}
+  fuzzy_criterion: >
+    The user is asking in general terms whether the day or time is pleasant,
+    suitable or a good idea for a relaxed leisure outing, rather than asking
+    about one specific hazard.
+  advice: >
+    Give a qualitative verdict - "pleasant", "mixed" or "unpleasant" - using only
+    the reported figures. Name the single reported factor (heat, rain chance,
+    wind or UV) that most affects comfort and suggest one practical adjustment
+    (timing, shade, or an indoor backup). Never call the day safe or guaranteed.
+    If a higher-severity SOP is also listed, it takes precedence and the verdict
+    must not contradict it.
+  cite_as: "SOP-FZ-01 - Leisure outing, general suitability (fuzzy)"

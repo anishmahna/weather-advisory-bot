@@ -1,0 +1,37 @@
+# Situational SOPs outrank all others: they apply to ANY outdoor question and
+# are always named first. Open-Meteo has no "IMD low-pressure system" feed, so
+# SIT-01 uses a documented proxy (rain totals / pressure / rain-code combos).
+- id: SOP-SIT-01
+  category: situational
+  severity: critical
+  situational: true
+  title: Active heavy-rain system
+  conditions:
+    any:
+      - {field: daily_precipitation_sum, op: gte, value: 64.5}      # IMD "heavy" lower bound, mm/24h
+      - all:                                                        # no single number looks extreme
+          - {field: pressure_msl, op: lt, value: 1002}
+          - any:
+              - {field: daily_precipitation_sum, op: gte, value: 30}
+              - {field: daily_precipitation_probability_max, op: gte, value: 90}
+              - {field: weather_code, op: in, value: [65, 82]}
+  advice: >
+    A significant rain system is affecting this location. Treat every outdoor
+    activity question as HIGH severity. Lead with the rain system itself and the
+    reported rainfall and pressure figures before any activity-specific advice.
+    Recommend postponing outdoor activity or moving it indoors unless essential,
+    and for any travel check official IMD / local alerts before leaving.
+  cite_as: "SOP-SIT-01 - Active heavy-rain system (situational override)"
+
+- id: SOP-SIT-02
+  category: situational
+  severity: critical
+  situational: true
+  title: Thunderstorm conditions
+  conditions:
+    {field: weather_code, op: in, value: [95, 96, 99]}
+  advice: >
+    Thunderstorm conditions are forecast. Advise against any outdoor activity
+    during the storm because of lightning risk; recommend sheltering indoors and
+    rescheduling until the storm has passed.
+  cite_as: "SOP-SIT-02 - Thunderstorm (situational override)"

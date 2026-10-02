@@ -1,0 +1,82 @@
+- id: SOP-EX-01
+  category: outdoor_exercise
+  severity: high
+  title: High UV during midday exercise
+  applies_to: {activity_groups: [exercise]}
+  conditions:
+    all:
+      - {field: uv_index, op: gte, value: 8}
+      - {field: local_hour, op: gte, value: 11}
+      - {field: local_hour, op: lte, value: 16}
+  advice: >
+    Advise against unprotected outdoor exercise in the 11:00-16:00 window.
+    Recommend sunscreen and protective clothing, and rescheduling to early
+    morning or evening.
+  cite_as: "SOP-EX-01 - High UV, midday exercise"
+
+- id: SOP-EX-02
+  category: outdoor_exercise
+  severity: high
+  priority: 20          # tie-break: crash risk outranks sunburn risk
+  title: High wind on two-wheeled travel
+  applies_to: {activity_groups: [two_wheeled]}
+  conditions:
+    any:
+      - {field: wind_speed_10m, op: gt, value: 40}
+      - {field: wind_gusts_10m, op: gt, value: 55}
+  advice: >
+    Treat this as a safety risk, not a comfort issue. Advise against cycling or
+    riding a two-wheeler until the wind drops, or suggest an enclosed alternative.
+  cite_as: "SOP-EX-02 - High wind, two-wheeled travel"
+
+- id: SOP-EX-03
+  category: outdoor_exercise
+  severity: high
+  title: Extreme heat during exercise
+  applies_to: {activity_groups: [exercise]}
+  conditions: {field: apparent_temperature, op: gte, value: 40}
+  advice: >
+    Advise against strenuous outdoor exercise because of heat-illness risk.
+    Recommend an indoor alternative or moving the session to the coolest part
+    of the day.
+  cite_as: "SOP-EX-03 - Extreme heat, exercise"
+
+- id: SOP-EX-04
+  category: outdoor_exercise
+  severity: moderate
+  title: Hot conditions during exercise
+  applies_to: {activity_groups: [exercise]}
+  conditions:
+    all:
+      - {field: apparent_temperature, op: gte, value: 35}
+      - {field: apparent_temperature, op: lt, value: 40}
+  advice: >
+    Exercise is possible but reduce intensity, carry water, take shade breaks,
+    and prefer early morning or evening.
+  cite_as: "SOP-EX-04 - Hot conditions, exercise"
+
+- id: SOP-EX-05
+  category: outdoor_exercise
+  severity: low
+  title: Wet conditions during exercise
+  applies_to: {activity_groups: [exercise]}
+  conditions:
+    any:
+      - {field: precipitation_probability, op: gte, value: 60}
+      - {field: precipitation, op: gte, value: 0.5}
+  advice: >
+    Rain is likely or falling. Carry rain gear, expect slippery surfaces and
+    reduced visibility, and reduce speed.
+  cite_as: "SOP-EX-05 - Wet conditions, exercise"
+
+- id: SOP-EX-06
+  category: outdoor_exercise
+  severity: info
+  fallback: true        # only used when no other SOP matched
+  title: Exercise - no threshold exceeded
+  applies_to: {activity_groups: [exercise]}
+  advice: >
+    None of the written exercise thresholds (UV, wind, heat, rain) are exceeded
+    for the reported time. Say so plainly, report the figures, and do not
+    describe the activity as guaranteed safe.
+  cite_as: "SOP-EX-06 - Exercise baseline (no threshold exceeded)"
