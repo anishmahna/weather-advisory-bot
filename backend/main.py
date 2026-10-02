@@ -2,10 +2,12 @@ import uuid
 from dotenv import load_dotenv
 load_dotenv()
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .graph import Advisor
 
 app = FastAPI(title="Weather Advisory Bot")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 advisor = Advisor()          # raises at startup if any SOP file is malformed
 
 

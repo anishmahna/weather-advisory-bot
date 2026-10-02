@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather Advisory Bot</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;background:#f6f7f9;color:#111}
+  h1{font-size:20px;margin:8px 0}
+  #log{background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;height:60vh;overflow-y:auto}
+  .m{margin:8px 0;padding:8px 10px;border-radius:8px;white-space:pre-wrap;line-height:1.4}
+  .u{background:#dbeafe;margin-left:15%}
+  .b{background:#f1f5f9;margin-right:15%}
+  details{margin-top:6px;font-size:12px}
+  pre{overflow-x:auto;background:#fff;padding:6px;border-radius:6px}
+  form{display:flex;gap:8px;margin-top:10px}
+  input{flex:1;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+  button{padding:10px 16px;border:0;border-radius:8px;background:#1d4ed8;color:#fff;font-size:15px;cursor:pointer}
+  button:disabled{opacity:.5}
+  small{color:#555}
+</style>
+</head>
+<body>
+<h1>Weather Advisory Bot</h1>
+<small>Advice comes only from written SOPs. Try: "Is it safe to bike to work in Bhopal today?" then "what about this evening?"</small>
+<div id="log"></div>
+<form id="f"><input id="q" placeholder="Ask about an outdoor activity..." autocomplete="off" required><button id="s">Send</button></form>
+<button id="reset" type="button" style="margin-top:8px;background:#64748b">New session</button>
+<script>
+const BACKEND_URL = "https://weather-advisory-bot-bzfg.onrender.com";
+let sid = crypto.randomUUID();
+const log = document.getElementById("log"), q = document.getElementById("q"), s = document.getElementById("s");
+
+function add(role, text, trace) {
+  const d = document.createElement("div");
+  d.className = "m " + (role === "user" ? "u" : "b");
+  d.textContent = text;
+  if (trace) {
+    const det = document.createElement("details");
+    const sm = document.createElement("summary"); sm.textContent = "Why did it say that?";
+    const pre = document.createElement("pre"); pre.textContent = JSON.stringify(trace, null, 2);
+    det.append(sm, pre); d.append(det);
+  }
+  log.append(d); log.scrollTop = log.scrollHeight;
+}
+
+document.getElementById("f").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = q.value.trim(); if (!msg) return;
+  add("user", msg); q.value = ""; s.disabled = true;
+  try {
+    const r = await fetch(BACKEND_URL + "/chat", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: msg, session_id: sid})
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    add("bot", data.reply, data.trace);
+  } catch (err) {
+    add("bot", "Could not reach the backend (" + err.message + "). If it was idle, wait a minute and retry.");
+  }
+  s.disabled = false; q.focus();
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  fetch(BACKEND_URL + "/reset/" + sid, {method: "POST"}).catch(() => {});
+  sid = crypto.randomUUID(); log.innerHTML = "";
+});
+</script>
+</body>
+</html>
